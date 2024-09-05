@@ -43,6 +43,7 @@ function LogIn() {
       setLoginError("Please enter email and password");
       return;
     }
+
     try {
       const res = await axiosInstance.post("/login", {
         role: location.state,

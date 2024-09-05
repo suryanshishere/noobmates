@@ -3,7 +3,7 @@ require("dotenv").config();
 require("express-async-errors");
 const cors = require("cors");
 const morgan = require("morgan");
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8000;
 const authMiddleware = require("./middleware/auth");
 const errorHandlerMiddleware = require("./middleware/errorMiddleware");
 const notFound = require("./middleware/notFound");
@@ -30,14 +30,19 @@ app.use("/api/v1/bill", authMiddleware, require("./routes/Bill"));
 app.use("/api/v1/treatement", authMiddleware, require("./routes/Treatement"));
 app.use(notFound);
 app.use(errorHandlerMiddleware);
-const startServer = () => {
+
+
+const startServer = async () => {
   try {
-    connectDB(process.env.MONGO_URI);
+    // Connect to DB
+    await connectDB(process.env.MONGO_URI);
+    // Start the server
     app.listen(PORT, () => {
-      console.log(`Server running on ${PORT}`);
+      console.log(`Server running on port ${PORT}`);
     });
   } catch (err) {
-    throw new Error(err);
+    console.error("Error starting the server:", err.message);
+    process.exit(1); // Exit the process if an error occurs
   }
 };
 
