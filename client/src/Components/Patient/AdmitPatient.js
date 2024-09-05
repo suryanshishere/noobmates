@@ -11,11 +11,10 @@ import {
   Row,
   Table,
 } from "reactstrap";
-import axiosInstance from "../../utils/axiosInstance";
+// import axiosInstance from "../../utils/axiosInstance";
 import Loader from "../Loader";
 import moment from "moment";
 import { DatePicker } from "reactstrap-date-picker";
-import jwtDecode from "jwt-decode";
 const AdmitPatient = () => {
   const { id } = useParams();
 
@@ -29,118 +28,118 @@ const AdmitPatient = () => {
   const [loading, setLoading] = useState(false);
   const [treatments, setTreatments] = useState([{ name: "", cost: "" }]);
   const [admissionId, setAdmissionId] = useState(null);
-  const { role } = jwtDecode(localStorage.getItem("token"));
+  const role = "admin";
   const [showTreatment, setShowTreatment] = useState(
     role === "doctor" ? true : false
   );
 
   const handleSubmit = async () => {
-    console.log({ ...admitData, patient_id: id });
-    const admit = await axiosInstance.post("/patient/admit", {
-      ...admitData,
-      patient_id: id,
-    });
-    history.push("/patients");
+    // console.log({ ...admitData, patient_id: id });
+    // const admit = await axiosInstance.post("/patient/admit", {
+    //   ...admitData,
+    //   patient_id: id,
+    // });
+    // history.push("/patients");
   };
   const handleDischarge = async (e) => {
-    const {
-      data: { treatment },
-    } = await axiosInstance.post("/treatement", treatments);
-    // console.log(treatment);
-    const {
-      data: { admission },
-    } = await axiosInstance.patch(`/patient/admit/${admissionId}`, {
-      treatment: treatment,
-    });
+    // const {
+    //   data: { treatment },
+    // } = await axiosInstance.post("/treatement", treatments);
+    // // console.log(treatment);
+    // const {
+    //   data: { admission },
+    // } = await axiosInstance.patch(`/patient/admit/${admissionId}`, {
+    //   treatment: treatment,
+    // });
 
-    const discharge = await axiosInstance.post("/bill", {
-      patient_id: id,
-      admission_id: admissionId,
-      discharge_date: new Date(),
-    });
+    // const discharge = await axiosInstance.post("/bill", {
+    //   patient_id: id,
+    //   admission_id: admissionId,
+    //   discharge_date: new Date(),
+    // });
 
-    if (role === "doctor") {
-      history.push("/patients");
-    } else {
-      history.push(`/patient/${id}`);
-    }
+    // if (role === "doctor") {
+    //   history.push("/patients");
+    // } else {
+    //   history.push(`/patient/${id}`);
+    // }
   };
 
   const hasPreviousAdmission = (admissions) => {
     // console.log(admissions);
-    return admissions?.some((admit) => {
-      if (admit.bill_id === undefined) {
-        // setAdmissionId(admit._id);
-        return true;
-      } else {
-        return false;
-      }
-    });
+    // return admissions?.some((admit) => {
+    //   if (admit.bill_id === undefined) {
+    //     // setAdmissionId(admit._id);
+    //     return true;
+    //   } else {
+    //     return false;
+    //   }
+    // });
   };
   useEffect(() => {
-    const getData = async () => {
-      setLoading(true);
-      const {
-        data: { admission },
-      } = await axiosInstance.get(`/patient/admit/${id}`);
-      setPrevAdmissions(admission);
-      //  else {
-      const {
-        data: { doctors },
-      } = await axiosInstance.get("/doctor");
-      // console.log(doctors);
-      admission?.some((admit) => {
-        if (admit.bill_id === undefined) {
-          setAdmissionId(admit._id);
-          return true;
-        } else {
-          return false;
-        }
-      });
-      if (doctors) {
-        setDoctors([...doctors]);
-      }
+    // const getData = async () => {
+    //   setLoading(true);
+    //   const {
+    //     data: { admission },
+    //   } = await axiosInstance.get(`/patient/admit/${id}`);
+    //   setPrevAdmissions(admission);
+    //   //  else {
+    //   const {
+    //     data: { doctors },
+    //   } = await axiosInstance.get("/doctor");
+    //   // console.log(doctors);
+    //   admission?.some((admit) => {
+    //     if (admit.bill_id === undefined) {
+    //       // setAdmissionId(admit._id);
+    //       return true;
+    //     } else {
+    //       return false;
+    //     }
+    //   });
+    //   if (doctors) {
+    //     setDoctors([...doctors]);
+    //   }
 
-      const {
-        data: { rooms },
-      } = await axiosInstance.get("/room");
+    //   const {
+    //     data: { rooms },
+    //   } = await axiosInstance.get("/room");
 
-      const filteredRooms = await Promise.all(
-        rooms.map(async (room) => {
-          const {
-            data: { room: roomData },
-          } = await axiosInstance.get(`/room/${room._id}`);
-          // console.log(roomData.length);
-          // console.log(room.no_of_beds);
-          if (roomData.length < room.no_of_beds) {
-            return room;
-          }
-        })
-      ).then((res) => res.filter(Boolean));
+    //   const filteredRooms = await Promise.all(
+    //     rooms.map(async (room) => {
+    //       const {
+    //         data: { room: roomData },
+    //       } = await axiosInstance.get(`/room/${room._id}`);
+    //       // console.log(roomData.length);
+    //       // console.log(room.no_of_beds);
+    //       if (roomData.length < room.no_of_beds) {
+    //         return room;
+    //       }
+    //     })
+    //   ).then((res) => res.filter(Boolean));
 
-      console.log(filteredRooms);
+    //   console.log(filteredRooms);
 
-      // getRoomsWithSpace(rooms);
+    //   // getRoomsWithSpace(rooms);
 
-      setRooms(filteredRooms);
-      const {
-        data: { carriers },
-      } = await axiosInstance.get("/carrier");
-      setCarriers([...carriers]);
-      setLoading(false);
-      // }
-      // hasPreviousAdmission(prevAdmissions);
-    };
+    //   setRooms(filteredRooms);
+    //   const {
+    //     data: { carriers },
+    //   } = await axiosInstance.get("/carrier");
+    //   setCarriers([...carriers]);
+    //   setLoading(false);
+    //   // }
+    //   // hasPreviousAdmission(prevAdmissions);
+    // };
 
-    getData();
+    // getData();
   }, []);
   useEffect(() => {
-    if (role === "doctor") {
-      hasPreviousAdmission(prevAdmissions);
-    }
-    console.log("Boom");
-  }, [admissionId]);
-  useEffect(() => {}, [treatments]);
+    // if (role === "doctor") {
+    //   hasPreviousAdmission(prevAdmissions);
+    // }
+    // console.log("Boom");
+  }, []);
+  useEffect(() => { }, [treatments]);
   console.log(doctors);
   if (loading && role !== "doctor") {
     return <Loader />;
@@ -154,46 +153,49 @@ const AdmitPatient = () => {
       <div>
         <h3>Please Add Treatements for patient before discharge</h3>
         {treatments.map((treatment, index) => (
-          <FormGroup>
+          <FormGroup key={index}>
             <Row>
               <Col sm="2">
-                <Label for="docname">Treatment Name</Label>
+                <Label for="treatmentName">Treatment Name</Label>
               </Col>
               <Col sm="4">
                 <Input
                   type="text"
+                  id="treatmentName"
+                  value={treatment.name}
                   onChange={(e) => {
-                    let temp = treatments;
+                    const temp = [...treatments];
                     temp[index].name = e.target.value;
-                    setTreatments([...temp]);
+                    setTreatments(temp);
                   }}
                 />
               </Col>
             </Row>
             <Row className="mt-3">
               <Col sm="2">
-                <Label for="docname">Treatment Cost</Label>
+                <Label for="treatmentCost">Treatment Cost</Label>
               </Col>
               <Col sm="4">
                 <Input
                   type="number"
+                  id="treatmentCost"
+                  value={treatment.cost}
                   onChange={(e) => {
-                    let temp = treatments;
+                    const temp = [...treatments];
                     temp[index].cost = e.target.value;
-                    setTreatments([...temp]);
+                    setTreatments(temp);
                   }}
                 />
               </Col>
             </Row>
-
             <Row>
               <Col sm="2">
                 <Button
                   color="danger"
                   onClick={() => {
-                    let temp = treatments;
+                    const temp = [...treatments];
                     temp.splice(index, 1);
-                    setTreatments([...temp]);
+                    setTreatments(temp);
                   }}
                 >
                   Remove
@@ -210,9 +212,7 @@ const AdmitPatient = () => {
             <Button
               color="primary"
               onClick={() => {
-                let temp = treatments;
-                temp.push({ name: "", cost: "" });
-                setTreatments([...temp]);
+                setTreatments([...treatments, { name: "", cost: "" }]);
               }}
             >
               Add More
@@ -251,7 +251,7 @@ const AdmitPatient = () => {
                     </Button>
                   ) : (
                     <Button
-                      id={admission._id}
+                      // id={admission._id}
                       color="danger"
                       onClick={(e) => {
                         setAdmissionId(e.target.id);
@@ -290,7 +290,7 @@ const AdmitPatient = () => {
               >
                 <option hidden></option>
                 {doctors?.map((doctor) => (
-                  <option key={doctor._id} value={doctor._id}>
+                  <option >
                     {doctor.name}
                   </option>
                 ))}
@@ -309,16 +309,16 @@ const AdmitPatient = () => {
                 name="docname"
                 onChange={(e) => {
                   setAdmitData({ ...admitData, room_id: e.target.value });
-                  const index = rooms.findIndex(
-                    (item) => item._id === e.target.value
-                  );
-                  setCurrRom(rooms[index]);
+                  // const index = rooms.findIndex(
+                  //   (item) => item._id === e.target.value
+                  // );
+                  // setCurrRom(rooms[index]);
                 }}
                 value={admitData.room_id}
               >
                 <option hidden></option>
                 {rooms?.map((room) => (
-                  <option key={room._id} value={room._id}>
+                  <option >
                     {room.room_no}
                   </option>
                 ))}
@@ -372,7 +372,7 @@ const AdmitPatient = () => {
               >
                 <option hidden></option>
                 {carriers?.map((carrier) => (
-                  <option key={carrier._id} value={carrier._id}>
+                  <option >
                     {carrier.name}
                   </option>
                 ))}

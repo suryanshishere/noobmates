@@ -1,4 +1,3 @@
-import jwt from "jwt-decode";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
@@ -8,7 +7,7 @@ import Loader from "../Loader";
 function Profile() {
   const [patientDetails, setPatientDetails] = useState({});
   const [loading, setLoading] = useState(true);
-  const { _id } = jwt(localStorage.getItem("token"));
+  // const { _id } = jwt(localStorage.getItem("token"));
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [showChangePassword, setShowChangePassword] = useState(false);
@@ -19,31 +18,31 @@ function Profile() {
     }
     const getData = async () => {
       setLoading(true);
-      const res = await axiosInstance.get(`/patient/${_id}`);
-      if (res.status === 200) {
-        setPatientDetails(res.data.patient?.[0]);
-        setLoading(false);
-      }
+      // const res = await axiosInstance.get(`/patient/${_id}`);
+      // if (res.status === 200) {
+      //   setPatientDetails(res.data.patient?.[0]);
+      //   setLoading(false);
+      // }
     };
     getData();
-  }, [_id]);
+  }, []);
   const handleSubmit = async () => {
-    const res = await axiosInstance.patch(`/patient/${_id}`, {
-      ...patientDetails,
-    });
+    // const res = await axiosInstance.patch(`/patient/${_id}`, {
+    //   ...patientDetails,
+    // });
     alert("Details Updated Successfully");
   };
   const handlePasswordChange = async () => {
     try {
-      const res = await axiosInstance.patch(`/update/${_id}`, {
-        oldPassword,
-        newPassword,
-        role: "patient",
-      });
-      if (res.status === 200) {
-        setShowChangePassword(false);
-        window.alert("Password Changed Successfully");
-      }
+      // const res = await axiosInstance.patch(`/update/${_id}`, {
+      //   oldPassword,
+      //   newPassword,
+      //   role: "patient",
+      // // });
+      // if (res.status === 200) {
+      //   setShowChangePassword(false);
+      //   window.alert("Password Changed Successfully");
+      // }
     } catch (e) {
       console.log(e.response.data.error);
       window.alert(e.response.data.error);

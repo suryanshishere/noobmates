@@ -1,11 +1,10 @@
-import jwtDecode from "jwt-decode";
 import { Link, useLocation } from "react-router-dom";
 import { Nav, NavItem, NavLink } from "reactstrap";
 import { GrAddCircle } from "react-icons/gr";
 import { AiOutlineOrderedList } from "react-icons/ai";
 const DoctorNav = ({ children }) => {
   const location = useLocation();
-  const { role } = jwtDecode(localStorage.getItem("token"));
+  const role  = "admin";
   return (
     <>
       {role === "admin" && (

@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import jwt from "jwt-decode";
+// import jwt from "jwt-decode";
 import axiosInstance from "../../utils/axiosInstance";
 import { Button, Col, Row, Table } from "reactstrap";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
 import Loader from "../Loader";
 const PatientBills = () => {
-  const { _id: patientId } = jwt(localStorage.getItem("token"));
+  // const { _id: patientId } = jwt(localStorage.getItem("token"));
   const [bills, setBills] = useState([]);
   const [loading, setLoading] = useState(true);
   const history = useHistory();
@@ -15,12 +15,12 @@ const PatientBills = () => {
       history.push("/login");
     }
     const getData = async () => {
-      setLoading(true);
-      const {
-        data: { bill },
-      } = await axiosInstance.get(`/patient/bill/${patientId}`);
-      setBills(bill);
-      setLoading(false);
+      // setLoading(true);
+      // const {
+      //   data: { bill },
+      // } = await axiosInstance.get(`/patient/bill/${patientId}`);
+      // setBills(bill);
+      // setLoading(false);
     };
     getData();
   }, []);
@@ -57,7 +57,7 @@ const PatientBills = () => {
                 <td>{moment(bill.discharge_date).format("YYYY-MM-DD")}</td>
                 <td>
                   <Button
-                    id={bill._id}
+                    // id={bill._id}
                     color="primary"
                     onClick={(e) => history.push(`/bills/${e.target.id}`)}
                   >

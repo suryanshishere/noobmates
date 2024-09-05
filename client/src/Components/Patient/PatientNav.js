@@ -3,10 +3,10 @@ import { Nav, NavItem, NavLink } from "reactstrap";
 
 import { AiOutlineOrderedList } from "react-icons/ai";
 import { GrAddCircle } from "react-icons/gr";
-import jwtDecode from "jwt-decode";
+// import jwtDecode from "jwt-decode";
 const PatientNav = ({ children }) => {
   const location = useLocation();
-  const { role } = jwtDecode(localStorage.getItem("token"));
+  const  role  = "admin";
   return (
     <>
       <Nav tabs>

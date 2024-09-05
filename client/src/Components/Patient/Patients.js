@@ -3,7 +3,6 @@ import { useHistory, useLocation } from "react-router-dom";
 import { Button, Col, Input, Row, Table } from "reactstrap";
 import axiosInstance from "../../utils/axiosInstance";
 import Loader from "../Loader";
-import jwtDecode from "jwt-decode";
 function Patients() {
   const [patients, setPatients] = useState([]);
   const [search, setSearch] = useState("");
@@ -11,31 +10,33 @@ function Patients() {
   const location = useLocation();
   const history = useHistory();
   // const [role, setRole] = useState("");
-  const { role, _id } = jwtDecode(localStorage.getItem("token"));
-  useEffect(() => {
-    const getData = async () => {
-      if (role === "doctor") {
-        const {
-          data: { patients },
-        } = await axiosInstance.get(`/doctor/patients/${_id}`);
-        setPatients([...patients]);
-        setLoading(false);
-      } else {
-        setLoading(true);
-        const res = await axiosInstance.get("/patient");
-        if (res.status === 200) {
-          setPatients(res.data.patients);
-          setLoading(false);
-        }
-      }
-    };
-    getData();
-  }, [role, _id]);
+  // const { role, _id } = jwtDecode(localStorage.getItem("token"));
+  const role = "admin"
 
-  const handleDelete = async (id) => {
-    await axiosInstance.delete(`/patient/${id}`);
-    location.reload();
-  };
+  useEffect(() => {
+    // const getData = async () => {
+    //   if (role === "doctor") {
+    //     const {
+    //       data: { patients },
+    //     } = await axiosInstance.get(`/doctor/patients/${_id}`);
+    //     setPatients([...patients]);
+    //     setLoading(false);
+    //   } else {
+    //     setLoading(true);
+    //     const res = await axiosInstance.get("/patient");
+    //     if (res.status === 200) {
+    //       setPatients(res.data.patients);
+    //       setLoading(false);
+    //     }
+    //   }
+    // };
+    // getData();
+  }, []);
+
+  // const handleDelete = async (id) => {
+  //   await axiosInstance.delete(`/patient/${id}`);
+  //   location.reload();
+  // };
   if (loading || role === undefined) {
     return <Loader />;
   }

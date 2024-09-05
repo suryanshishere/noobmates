@@ -3,7 +3,6 @@ import axiosInstance from "../../utils/axiosInstance";
 import { Button, Col, FormGroup, Input, Label, Row, Table } from "reactstrap";
 import moment from "moment";
 import { useHistory } from "react-router-dom";
-import jwtDecode from "jwt-decode";
 
 const AdmittedPatients = () => {
   const [patients, setPatients] = useState([]);
@@ -11,7 +10,9 @@ const AdmittedPatients = () => {
   const [treatments, setTreatments] = useState([{ name: "", cost: "" }]);
   const [admissionId, setAdmissionId] = useState(null);
   const [patientId, setPatientId] = useState(null);
-  const { role, _id } = jwtDecode(localStorage.getItem("token"));
+  // const { role, _id } = jwtDecode(localStorage.getItem("token"));
+  const role = "admin";
+  
   // if (role === "doctor") {
   //   setShowTreatment(true);
   // }

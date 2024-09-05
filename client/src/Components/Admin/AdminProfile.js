@@ -1,4 +1,3 @@
-import jwt from "jwt-decode";
 import React, { useEffect, useState } from "react";
 import { Button, Col, Form, FormGroup, Input, Label, Row } from "reactstrap";
 import axiosInstance from "../../utils/axiosInstance";
@@ -6,7 +5,7 @@ import Loader from "../Loader";
 import { useHistory } from "react-router-dom";
 function AdminProfile() {
   const [adminDetails, setAdminDetails] = useState();
-  const { _id } = jwt(localStorage.getItem("token"));
+  // const { _id } = jwt(localStorage.getItem("token"));
   const [loading, setLoading] = useState(true);
   const [oldPassword, setOldPassword] = useState(null);
   const [newPassword, setNewPassword] = useState(null);
@@ -18,36 +17,36 @@ function AdminProfile() {
     }
     const getProfile = async () => {
       setLoading(true);
-      const res = await axiosInstance.get(`/admin/${_id}`);
-      if (res.status === 200) {
-        setAdminDetails(res.data.admin);
-        setLoading(false);
-      } else {
-        console.log(res.data.error);
-      }
+      // const res = await axiosInstance.get(`/admin/${_id}`);
+      // if (res.status === 200) {
+      //   setAdminDetails(res.data.admin);
+      //   setLoading(false);
+      // } else {
+      //   console.log(res.data.error);
+      // }
     };
 
     getProfile();
   }, []);
   const handleSubmit = async () => {
-    await axiosInstance.patch(`/admin/${_id}`, { ...adminDetails });
-    window.location.reload();
+    // await axiosInstance.patch(`/admin/${_id}`, { ...adminDetails });
+    // window.location.reload();
   };
   const handlePasswordChange = async () => {
-    try {
-      const res = await axiosInstance.patch(`/update/${_id}`, {
-        oldPassword,
-        newPassword,
-        role: "admin",
-      });
-      if (res.status === 200) {
-        setShowChangePassword(false);
-        window.alert("Password Changed Successfully");
-      }
-    } catch (e) {
-      console.log(e.response.data.error);
-      window.alert(e.response.data.error);
-    }
+    // try {
+    //   const res = await axiosInstance.patch(`/update/${_id}`, {
+    //     oldPassword,
+    //     newPassword,
+    //     role: "admin",
+    //   });
+    //   if (res.status === 200) {
+    //     setShowChangePassword(false);
+    //     window.alert("Password Changed Successfully");
+    //   }
+    // } catch (e) {
+    //   console.log(e.response.data.error);
+    //   window.alert(e.response.data.error);
+    // }
   };
   if (loading) {
     return <Loader />;

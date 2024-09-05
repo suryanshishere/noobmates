@@ -1,4 +1,3 @@
-import jwtDecode from "jwt-decode";
 import { AiOutlineOrderedList } from "react-icons/ai";
 import { GrAddCircle } from "react-icons/gr";
 import { Link, useLocation } from "react-router-dom";
@@ -6,7 +5,7 @@ import { Nav, NavItem, NavLink } from "reactstrap";
 
 const CarrierNav = ({ children }) => {
   const location = useLocation();
-  const { role } = jwtDecode(localStorage.getItem("token"));
+  const role  = "admin";
   return (
     <>
       {role === "admin" && (

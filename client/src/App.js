@@ -59,7 +59,7 @@ function App() {
             <ViewBill />
           </Route>
           <Route exact path="/">
-            <Home />
+            <Home />  
           </Route>
           <Route path="/login">
             <LogIn />

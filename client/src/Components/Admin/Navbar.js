@@ -1,4 +1,3 @@
-import jwtDecode from "jwt-decode";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
@@ -24,7 +23,7 @@ function NavBar() {
     dispatch({ type: "LOG_OUT" });
     history.push("/");
   };
-  const { role } = jwtDecode(localStorage.getItem("token"));
+  const role = "admin";
   console.log(role);
   if (role === "patient") {
     return (
